@@ -8,7 +8,7 @@ import HelloWorld from './components/HelloWorld.vue'
       <img src="./assets/nwlogo.png" class="logo" alt="NW logo" />
     </a>
   </div>
-  <HelloWorld msg="NW Group Auth." />
+  <HelloWorld msg="Hello Vue-TS!" />
 </template>
 
 <style scoped>
