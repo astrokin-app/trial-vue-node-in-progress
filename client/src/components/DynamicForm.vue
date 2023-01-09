@@ -10,7 +10,7 @@ defineRule('min', min);
 
 // Generates a French message locale generator
 configure({
-  generateMessage: localize('en', {
+  generateMessage: localize('fr', {
     messages: {
       required: 'Ce champ est obligatoire',
       email: 'Ce champ doit comporter un format e-mail valide',
@@ -30,6 +30,10 @@ defineProps({
     required: false,
   }
 })
+
+// const submitForm = () => {
+//   console.log(formValues);
+// };
 </script>
 
 <template>
