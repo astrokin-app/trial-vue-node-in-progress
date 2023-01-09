@@ -10,8 +10,13 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.6",
+    "@vee-validate/i18n": "^4.7.3",
+    "@vee-validate/rules": "^4.7.3",
     "bootstrap": "^5.2.3",
-    "vue": "^3.2.45"
+    "vee-validate": "^4.7.3",
+    "vue": "^3.2.45",
+    "vue-router": "^4.1.6",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
