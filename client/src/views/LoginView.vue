@@ -9,7 +9,7 @@ const formSchema = {
       label: 'Addresse e-mail',
       name: 'email',
       as: 'input',
-      rules: Yup.string().required().email(),
+      rules: Yup.string().email().required(),
     },
     {
       label: 'Password',
@@ -27,7 +27,7 @@ const registerRedirect = () => {
 </script>
 
 <template>
-  <DynamicForm :schema="formSchema">
+  <DynamicForm :schema="formSchema" :btn-label="'Se connecter'">
     <template #header>
       <img src="@/assets/nw-logo.jpg" alt="">
     </template>
