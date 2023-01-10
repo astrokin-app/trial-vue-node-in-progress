@@ -25,7 +25,6 @@ const formSchema = {
 
 const handleLogin = (e: string) => {
   const { email, password } = JSON.parse(e)
-  console.log(email, password)
   const user:User = {
     email: email,
     password: password
@@ -36,7 +35,6 @@ const handleLogin = (e: string) => {
   authStore.login(user)
   .then(res => {
     console.log(res)
-    // push to page dashboard
   }).catch(e => {
     console.log(e)
   })

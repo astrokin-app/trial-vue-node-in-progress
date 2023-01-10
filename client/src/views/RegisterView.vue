@@ -42,7 +42,6 @@ const handleRegister = (e: any) => {
   authStore.register(user)
   .then(res => {
     console.log(res)
-    // push to page dashboard
   }).catch(e => {
     console.log(e)
   })
