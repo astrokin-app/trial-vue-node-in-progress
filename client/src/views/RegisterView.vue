@@ -2,6 +2,8 @@
 import router from '@/router'
 import DynamicForm from '@/components/DynamicForm.vue'
 import * as Yup from 'yup'
+import { User } from '@/models/UsersModel';
+import { useAuthStore } from '@/stores/AuthStore';
 
 const formSchema = {
   fields: [
@@ -29,7 +31,21 @@ const formSchema = {
 
 const handleRegister = (e: any) => {
   const { name, email, password } = JSON.parse(e)
-  console.log(name, email, password)
+  const user:User = {
+    username: name,
+    email: email,
+    password: password
+  }
+
+  const authStore = useAuthStore()
+
+  authStore.register(user)
+  .then(res => {
+    console.log(res)
+    // push to page dashboard
+  }).catch(e => {
+    console.log(e)
+  })
 }
 
 const loginRedirect = () => {
