@@ -23,6 +23,8 @@ const formSchema = {
   ],
 };
 
+const authStore = useAuthStore()
+
 const handleLogin = (e: string) => {
   const { email, password } = JSON.parse(e)
   const user:User = {
@@ -30,11 +32,10 @@ const handleLogin = (e: string) => {
     password: password
   }
 
-  const authStore = useAuthStore()
-
   authStore.login(user)
   .then(res => {
-    console.log(res)
+    alert('Logged in successfully!');
+    // router.push("/profile")
   }).catch(e => {
     console.log(e)
   })

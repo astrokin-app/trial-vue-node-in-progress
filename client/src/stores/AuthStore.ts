@@ -19,6 +19,7 @@ export const useAuthStore = defineStore({
 
         const loginResult = await AuthService.login(user.email, user.password)
         if (loginResult) {
+          // @ts-ignore
           this.user = loginResult
         } else {
             this.user = []
@@ -31,6 +32,7 @@ export const useAuthStore = defineStore({
 
         const registerResult = await AuthService.register(user.username!, user.email, user.password)
         if (registerResult) {
+          // @ts-ignore
           this.user = registerResult
         } else {
             this.user = []

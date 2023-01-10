@@ -37,7 +37,6 @@ const emit = defineEmits<{
 
 function onSubmit(values: any) {
   emit('submitForm', JSON.stringify(values, null, 2))
-  alert(JSON.stringify(values, null, 2));
 }
 </script>
 

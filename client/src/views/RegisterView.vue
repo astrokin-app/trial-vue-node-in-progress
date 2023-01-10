@@ -29,6 +29,8 @@ const formSchema = {
   ],
 };
 
+const authStore = useAuthStore()
+
 const handleRegister = (e: any) => {
   const { name, email, password } = JSON.parse(e)
   const user:User = {
@@ -37,11 +39,10 @@ const handleRegister = (e: any) => {
     password: password
   }
 
-  const authStore = useAuthStore()
-
   authStore.register(user)
   .then(res => {
-    console.log(res)
+    alert('Register successfully!');
+    // router.push("/profile")
   }).catch(e => {
     console.log(e)
   })

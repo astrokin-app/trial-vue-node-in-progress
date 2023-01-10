@@ -1,4 +1,5 @@
 import axios from 'axios'
+import VueJwtDecode from "vue-jwt-decode";
 
 const API_URL = 'http://localhost:4000/'
 
@@ -8,10 +9,25 @@ class AuthService {
       .post(API_URL + 'login', {
         email, password
       })
-    if (response.data.accessToken) {
-      localStorage.setItem('user', JSON.stringify(response.data))
+
+    if (response.data.access_token) {
+      try {
+        const payload = VueJwtDecode.decode(response.data.access_token);
+
+        localStorage.setItem('user', JSON.stringify(payload))
+
+        return {
+          username: payload.username, 
+          email: payload.email,
+          token: response.data.access_token
+        }
+
+      } catch (error) {
+        console.log(error)
+      }
     }
-    return response.data
+
+    //
   }
 
   logout() {
@@ -25,10 +41,25 @@ class AuthService {
         email,
         password
       })
-    if (response.data.accessToken) {
-      localStorage.setItem('user', JSON.stringify(response.data))
-    }
-    return response.data
+
+      if (response.data.access_token) {
+        try {
+          const payload = VueJwtDecode.decode(response.data.access_token);
+
+          localStorage.setItem('user', JSON.stringify(payload))
+          
+          return {
+            username: payload.username, 
+            email: payload.email,
+            token: response.data.access_token
+          }
+  
+        } catch (error) {
+          console.log(error)
+        }
+      }
+
+      //
   }
 }
 
