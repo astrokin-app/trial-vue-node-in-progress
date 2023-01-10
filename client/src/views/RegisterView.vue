@@ -27,13 +27,18 @@ const formSchema = {
   ],
 };
 
+const handleRegister = (e: any) => {
+  const { name, email, password } = JSON.parse(e)
+  console.log(name, email, password)
+}
+
 const loginRedirect = () => {
   router.push("/login")
 }
 </script>
 
 <template>
-  <DynamicForm :schema="formSchema" :btn-label="'S\'enregister'">
+  <DynamicForm :schema="formSchema" :btn-label="'S\'enregister'" @submit-form="(e) => handleRegister(e)">
     <template #header>
       <img src="@/assets/nw-logo.jpg" alt="">
     </template>
