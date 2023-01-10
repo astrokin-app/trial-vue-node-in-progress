@@ -31,9 +31,13 @@ defineProps({
   }
 })
 
-// const submitForm = () => {
-//   console.log(formValues);
-// };
+const emit = defineEmits<{
+  (e: 'submitForm', value: string): void
+}>()
+
+function onSubmit(values: any) {
+  emit('submitForm', JSON.stringify(values, null, 2))
+}
 </script>
 
 <template>
@@ -44,7 +48,7 @@ defineProps({
       </div>
       <div class="card-body p-lg-5">
         <slot name="body"></slot>
-        <Form class="form-group">
+        <Form @submit="onSubmit" class="form-group">
           <div
             v-for="{ as, name, label, ...attrs } in schema.fields"
             :key="name"

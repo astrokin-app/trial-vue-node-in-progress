@@ -2,6 +2,8 @@
 import router from '@/router'
 import DynamicForm from '@/components/DynamicForm.vue'
 import * as Yup from 'yup'
+import { User } from '@/models/UsersModel';
+import { useAuthStore } from '@/stores/AuthStore';
 
 const formSchema = {
   fields: [
@@ -27,13 +29,32 @@ const formSchema = {
   ],
 };
 
+const authStore = useAuthStore()
+
+const handleRegister = (e: any) => {
+  const { name, email, password } = JSON.parse(e)
+  const user:User = {
+    username: name,
+    email: email,
+    password: password
+  }
+
+  authStore.register(user)
+  .then(res => {
+    alert('Register successfully!');
+    // router.push("/profile")
+  }).catch(e => {
+    console.log(e)
+  })
+}
+
 const loginRedirect = () => {
   router.push("/login")
 }
 </script>
 
 <template>
-  <DynamicForm :schema="formSchema" :btn-label="'S\'enregister'">
+  <DynamicForm :schema="formSchema" :btn-label="'S\'enregister'" @submit-form="(e) => handleRegister(e)">
     <template #header>
       <img src="@/assets/nw-logo.jpg" alt="">
     </template>
