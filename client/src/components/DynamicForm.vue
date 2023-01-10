@@ -36,8 +36,6 @@ const emit = defineEmits<{
 }>()
 
 function onSubmit(values: any) {
-  console.log(values)
-  // Submit values to API...
   emit('submitForm', JSON.stringify(values, null, 2))
   alert(JSON.stringify(values, null, 2));
 }

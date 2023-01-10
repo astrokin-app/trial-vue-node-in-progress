@@ -3,34 +3,31 @@ import { QueryResult } from 'pg'
 import { pool } from '../config/dbConfig'
 
 export const createUser = async (req: Request, res: Response): Promise<Response> => {
-  const {name, email, password} = req.body
-  console.log('ENDPOINT REGISTER', name, email, password)
-  // const response: QueryResult = await pool.query('INSERT INTO users (name, email, password) VALUES ($1, $2, $3)', [name, email, password])
-  // return res.status(200).json('Success')
-  return res.json({
-    message: 'User created successfully',
-    body: {
-      user: {
-        name,
-        email,
-        password
-      }
-    }
-  })
+  try {
+    const {username, email, password} = req.body
+    const response: QueryResult = await pool.query('INSERT INTO users (username, email, password) VALUES ($1, $2, $3)', [username, email, password])
+    console.log('ENDPOINT REGISTER', response)
+    return res.status(200).send(response.rows[0])
+  } catch (e) {
+    console.log(e)
+    if (e.toString().indexOf('no pg_hba.conf entry for host') !== -1) {
+      throw new Error(`Please use CUBEJS_DB_SSL=true to connect: ${e.toString()}`);
+  }
+    throw e;
+  }
 }
 
-export const getUser = async (req: Request, res: Response): Promise<Response> => {
-  const {email, password} = req.body
-  console.log('ENDPOINT LOGIN', email, password)
-  // const response: QueryResult = await pool.query('INSERT INTO users (name, email, password) VALUES ($1, $2, $3)', [name, email, password])
-  // return res.status(200).json('Success')
-  return res.json({
-    message: 'User created successfully',
-    body: {
-      user: {
-        email,
-        password
-      }
-    }
-  })
+export const getUserByEmailPassword = async (req: Request, res: Response): Promise<Response> => {
+  try {
+    const {email, password} = req.body
+    const response: QueryResult = await pool.query('SELECT * FROM users WHERE email = $1 and password = $2', [email, password])
+    console.log('ENDPOINT LOGIN', response)
+    return res.status(200).send(response.rows[0])
+  } catch (e) {
+    console.log(e)
+    if (e.toString().indexOf('no pg_hba.conf entry for host') !== -1) {
+      throw new Error(`Please use CUBEJS_DB_SSL=true to connect: ${e.toString()}`);
+  }
+    throw e;
+  }
 }

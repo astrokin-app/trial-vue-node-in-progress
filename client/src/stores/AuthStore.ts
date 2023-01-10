@@ -17,27 +17,25 @@ export const useAuthStore = defineStore({
       async login(user: User) {
         if (!user) return;
 
-        let loginResult = await AuthService.login(user.email, user.password)
-        if (loginResult.status == 200) {
-          console.log(loginResult)
-          this.user = loginResult.data
+        const loginResult = await AuthService.login(user.email, user.password)
+        if (loginResult) {
+          this.user = loginResult
         } else {
             this.user = []
         }
-        return loginResult.status
+        return loginResult
       },
 
       async register(user: User) {
         if (!user) return;
 
-        let registerResult = await AuthService.register(user.username!, user.email, user.password)
-        if (registerResult.status == 200) {
-          console.log(registerResult)
-          this.user = registerResult.data
+        const registerResult = await AuthService.register(user.username!, user.email, user.password)
+        if (registerResult) {
+          this.user = registerResult
         } else {
             this.user = []
         }
-        return registerResult.status
+        return registerResult
       }
     }
 })
