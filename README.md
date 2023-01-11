@@ -18,7 +18,4 @@ cd server/ npm install && npm run dev
 cd client/ npm install && npm run dev
 ```
 
-### When server and client started
-```
-You can access /login & /register routes.
-```
+### When server and client started you can access /login & /register routes.
