@@ -54,10 +54,10 @@ const registerRedirect = () => {
     </template>
     <template #body>
       <h3 class="mb-4">Bonjour et bienvenue!</h3>
-      <p class="text-muted text-sm mb-5">Veuillez saisir vos identifiants de connexion ci dessous :</p>
+      <p class="text-muted text-sm mb-2">Veuillez saisir vos identifiants de connexion ci dessous :</p>
     </template>
     <template #footer>
-      <div class="text-sm text-muted">Vous n'avez pas de compte ? <a @click="registerRedirect()" style="cursor: pointer">S'enregister</a>.</div>
+      <div class="text-sm text-muted">Vous n'avez pas de compte ? <a @click="registerRedirect()" style="cursor: pointer; color: rgb(3 111 186);">S'enregister</a>.</div>
     </template>
   </DynamicForm>
 </template>

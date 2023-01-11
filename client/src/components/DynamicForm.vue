@@ -48,13 +48,14 @@ function onSubmit(values: any) {
       </div>
       <div class="card-body p-lg-5">
         <slot name="body"></slot>
-        <Form @submit="onSubmit" class="form-group">
+        <Form @submit="onSubmit" class="form-group" style="text-align: initial">
           <div
+            class="form-outline"
             v-for="{ as, name, label, ...attrs } in schema.fields"
             :key="name"
           >
-            <label :for="name">{{ label }}</label>
-            <Field class="form-control" :as="as" :id="name" :name="name" v-bind="attrs" :rules="name === 'email' ? 'required|email' : name === 'password' ? 'required|min:6' : 'required'"/>
+            <label :for="name" class="form-label"></label>
+            <Field class="form-control" :placeholder="label" :as="as" :id="name" :name="name" v-bind="attrs" :rules="name === 'email' ? 'required|email' : name === 'password' ? 'required|min:6' : 'required'"/>
             <ErrorMessage class="error-message" as="div" :name=name v-slot="{ message }">
               <p>{{ message }}</p>
             </ErrorMessage>
@@ -95,11 +96,25 @@ function onSubmit(values: any) {
   cursor: pointer;
 }
 
-.submit-btn:hover {
-  transform: scale(1.1);
+.submit-btn:hover, .submit-btn:focus, .submit-btn:active, .submit-btn.active, .open>.dropdown-toggle.submit-btn {
+    color: #fff;
+    background-color: rgb(42, 102, 145);
+    border-color: #285e8e;
+    transform: scale(1.01);
 }
 
 .error-message {
   color: red;
+  font-size: 13px;
+  margin-bottom: 0;
+
+}
+.form-outline {
+  position: relative;
+  width: 100%;
+}
+
+.form-label {
+  font-size: 16px;
 }
 </style>

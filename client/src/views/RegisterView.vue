@@ -60,10 +60,10 @@ const loginRedirect = () => {
     </template>
     <template #body>
       <h3 class="mb-4">Démarrer avec NW Group!</h3>
-      <p class="text-muted text-sm mb-5">Veuillez créer un compte de connextion ci dessous :</p>
+      <p class="text-muted text-sm mb-2">Veuillez créer un compte de connextion ci dessous :</p>
     </template>
     <template #footer>
-      <div class="text-sm text-muted">Vous avez un compte ? <a @click="loginRedirect()" style="cursor: pointer">Se connecter</a>.</div>
+      <div class="text-sm text-muted">Vous avez un compte ? <a @click="loginRedirect()" style="cursor: pointer; color: rgb(3 111 186);" >Se connecter</a>.</div>
     </template>
   </DynamicForm>
 </template>
