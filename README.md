@@ -3,6 +3,11 @@
 git clone the repo: gh repo clone astrokin-app/node-vue-pg-ts-auth
 ```
 
+## Env setup
+```
+enter your database and jwt credentials in .env at the root of the cd /server
+```
+
 ## Project setup server
 ```
 cd server/ npm install && npm run dev
@@ -13,4 +18,7 @@ cd server/ npm install && npm run dev
 cd client/ npm install && npm run dev
 ```
 
-### When the server is started and the client you can access the form via /login or /register routes.
+### When server and client started
+```
+You can access /login & /register routes.
+```
