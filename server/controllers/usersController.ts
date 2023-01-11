@@ -4,6 +4,7 @@ import { pool } from '../config/dbConfig'
 import jwt from 'jsonwebtoken'
 require("dotenv").config()
 
+// TODO bcrypt password && model user
 export const createUser = async (req: Request, res: Response): Promise<Response> => {
   try {
     const {username, email, password} = req.body
