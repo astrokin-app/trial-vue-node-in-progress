@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import router from '@/router'
 import DynamicForm from '@/components/DynamicForm.vue'
-import DynamicCard from '@/components/DynamicCard.vue';
 import * as Yup from 'yup'
 import { useAuthStore } from '@/stores/AuthStore';
 import { User } from '@/models/UsersModel';
@@ -62,7 +61,7 @@ const registerRedirect = () => {
         <h2>Créer un compte</h2>
         <a @click="registerRedirect()" class="submit-link">S'enregister</a>
         <div class="m-4 text-sm text-white">
-          <p>Obtenez une vue précise et complète des compétences techniques de NW Group.</p>
+          <p>Obtenez une vue précise et complète des compétences techniques de NW Groupe.</p>
         </div>
       </div>
     </div>
