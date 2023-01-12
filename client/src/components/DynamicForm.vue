@@ -1,12 +1,18 @@
 <script setup lang="ts">
+import DynamicCard from './DynamicCard.vue';
 import { Form, Field, ErrorMessage, defineRule, configure } from 'vee-validate';
-import { required, email, min } from '@vee-validate/rules';
+import { required, email, min, one_of } from '@vee-validate/rules';
 import { localize } from '@vee-validate/i18n';
+import { fail } from 'assert';
+
+let failPassword = false
 
 // Define the rule globally
 defineRule('required', required);
 defineRule('email', email);
 defineRule('min', min);
+defineRule('oneOf', one_of);
+
 
 // Generates a French message locale generator
 configure({
@@ -14,7 +20,8 @@ configure({
     messages: {
       required: 'Ce champ est obligatoire',
       email: 'Ce champ doit comporter un format e-mail valide',
-      min: 'Ce champ doit contenir au minimum 6 characteres'
+      min: 'Ce champ doit contenir au minimum 6 characteres',
+      oneOf: 'Les mots de passe doivent correspondre'
     },
   }),
 });
@@ -35,54 +42,56 @@ const emit = defineEmits<{
   (e: 'submitForm', value: string): void
 }>()
 
-function onSubmit(values: any) {
-  emit('submitForm', JSON.stringify(values, null, 2))
+const onSubmit = (values: any) => {
+  if (values.password === values.confirmPassword) {
+    failPassword = false
+    document.getElementById('errorPassword')?.remove()
+    emit('submitForm', JSON.stringify(values, null, 2))
+  } else if (failPassword === false) {
+    failPassword = true
+    const element = document.createElement("div")
+    element.innerHTML = "Les mots de passe doivent correspondre"
+    element.style.fontSize = "13px"
+    element.style.color = "red"
+    element.id = "errorPassword"
+    document.getElementById('confirmPassword')?.parentNode?.appendChild(element); 
+  }
 }
 </script>
 
 <template>
-  <div class="col-lg-12 px-lg-4">
-    <div class="card">
-      <div class="card-header px-lg-5">
-        <slot name="header"></slot>
+  <DynamicCard>
+    <template #header>
+      <div>
+        <h1>NW Groupe</h1>
+        <h3>Réuissir la transition énergétique.</h3>
       </div>
-      <div class="card-body p-lg-5">
-        <slot name="body"></slot>
-        <Form @submit="onSubmit" class="form-group" style="text-align: initial">
-          <div
-            class="form-outline"
-            v-for="{ as, name, label, ...attrs } in schema.fields"
-            :key="name"
-          >
-            <label :for="name" class="form-label"></label>
-            <Field class="form-control" :placeholder="label" :as="as" :id="name" :name="name" v-bind="attrs" :rules="name === 'email' ? 'required|email' : name === 'password' ? 'required|min:6' : 'required'"/>
-            <ErrorMessage class="error-message" as="div" :name=name v-slot="{ message }">
-              <p>{{ message }}</p>
-            </ErrorMessage>
-          </div>
-          <button class="submit-btn">{{ btnLabel }}</button>
-        </Form>
-      </div>
-      <div class="card-footer px-lg-5 py-lg-4">
-        <slot name="footer"></slot>
-      </div>
-    </div>
-  </div>
+    </template>
+    <template #body>
+      <Form @submit="onSubmit" class="form-group" style="text-align: initial">
+        <div
+          class="form-outline"
+          v-for="{ as, name, label, ref, ...attrs } in schema.fields"
+          :key="name"
+        >
+          <label :for="name" class="form-label"></label>
+          <Field class="form-control" :vid="name" :placeholder="label" :as="as" :id="name" :name="name" :ref="ref" v-bind="attrs" :rules="name === 'email' ? 'required|email' : name === 'password' ? 'required|min:6' : name === 'confirmPassword' ? 'required|min:6' : 'required'"/>
+          <ErrorMessage class="error-message" as="div" :name=name v-slot="{ message }">
+            <p>{{ message }}</p>
+          </ErrorMessage>
+        </div>
+        <button class="submit-btn">{{ btnLabel }}</button>
+      </Form>
+    </template>
+    <template #footer>
+      <slot name="footer"></slot>
+    </template>
+  </DynamicCard>
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-}
-
-.card-header {
-  background-color: white;
-}
-
 .submit-btn {
-  background: rgb(3 111 186);
+  background: hsl(101deg 94% 36%);
   outline: none;
   border: none;
   color: #fff;
@@ -98,9 +107,8 @@ function onSubmit(values: any) {
 
 .submit-btn:hover, .submit-btn:focus, .submit-btn:active, .submit-btn.active, .open>.dropdown-toggle.submit-btn {
     color: #fff;
-    background-color: rgb(42, 102, 145);
-    border-color: #285e8e;
-    transform: scale(1.01);
+    transition: opacity 0.5s;  
+    opacity: 0.9;
 }
 
 .error-message {
