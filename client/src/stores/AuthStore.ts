@@ -4,7 +4,7 @@ import AuthService from '@/services/AuthService'
 
 export type RootState = {
   user: User[],
-  loading: bool
+  loading: boolean
 }
 
 export const useAuthStore = defineStore({
@@ -23,8 +23,7 @@ export const useAuthStore = defineStore({
         const loginResult = await AuthService.login(user.email, user.password!)
 
         if (loginResult) {
-          // @ts-ignore
-          this.user = loginResult
+          this.user = loginResult?
         } else {
             this.user = []
         }
@@ -38,8 +37,7 @@ export const useAuthStore = defineStore({
 
         const registerResult = await AuthService.register(user.username!, user.email, user.password!)
         if (registerResult) {
-          // @ts-ignore
-          this.user = registerResult
+          this.user = registerResult?
         } else {
             this.user = []
         }
