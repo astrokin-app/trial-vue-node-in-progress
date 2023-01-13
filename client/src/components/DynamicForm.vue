@@ -75,9 +75,9 @@ const authStore = useAuthStore()
   </DynamicCard>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .submit-btn {
-  background: hsl(101deg 94% 36%);
+  background: $primary-color;
   outline: none;
   border: none;
   color: #fff;

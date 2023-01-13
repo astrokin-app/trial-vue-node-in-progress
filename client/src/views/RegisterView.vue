@@ -68,8 +68,8 @@ const loginRedirect = (): void => {
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .register-view {
-  height: 100vh;
+  height: $vh-height;
 }
 </style>

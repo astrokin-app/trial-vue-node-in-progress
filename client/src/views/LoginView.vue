@@ -71,9 +71,10 @@ const registerRedirect = () => {
   </div>
 </template>
 
-<style scoped>
-.login-view {
-  height: 100vh;
+<style scoped lang="scss">
+.login-view
+{
+  height: $vh-height;
 }
 
 .login-form {
@@ -82,14 +83,14 @@ const registerRedirect = () => {
 }
 
 .register-redirect{
-    background-color: hsl(101deg 94% 36%);
+    background-color: $primary-color;
 }
 
 .submit-link {
   background: white;
   outline: none;
   border: none;
-  color: hsl(101deg 94% 36%);
+  color: $primary-color;
   font-size: 18px;
   padding: 10px 15px;
   display: block;
