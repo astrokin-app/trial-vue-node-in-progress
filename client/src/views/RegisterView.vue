@@ -31,7 +31,7 @@ const formSchema = {
 
 const authStore = useAuthStore()
 
-const handleRegister = (e: any) => {
+const handleRegister = (e: string): void => {
   const { name, email, password } = JSON.parse(e)
   const user:User = {
     username: name,
@@ -42,13 +42,12 @@ const handleRegister = (e: any) => {
   authStore.register(user)
   .then(res => {
     alert('Register successfully!');
-    // router.push("/profile")
   }).catch(e => {
-    console.log(e)
+    alert('ERROR Register!');
   })
 }
 
-const loginRedirect = () => {
+const loginRedirect = (): void => {
   router.push("/")
 }
 </script>

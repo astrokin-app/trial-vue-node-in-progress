@@ -35,9 +35,8 @@ const handleLogin = (e: string) => {
   authStore.login(user)
   .then(res => {
     alert('Logged in successfully!');
-    // router.push("/profile")
   }).catch(e => {
-    console.log(e)
+    alert('ERROR Login!');
   })
 }
 
