@@ -25,13 +25,13 @@ const formSchema = {
       as: 'input',
       type: 'password',
       rules: Yup.string().min(6).required(),
-    },
+    }
   ],
 };
 
 const authStore = useAuthStore()
 
-const handleRegister = (e: any) => {
+const handleRegister = (e: string): void => {
   const { name, email, password } = JSON.parse(e)
   const user:User = {
     username: name,
@@ -42,28 +42,30 @@ const handleRegister = (e: any) => {
   authStore.register(user)
   .then(res => {
     alert('Register successfully!');
-    // router.push("/profile")
   }).catch(e => {
-    console.log(e)
+    alert('ERROR Register!');
   })
 }
 
-const loginRedirect = () => {
-  router.push("/login")
+const loginRedirect = (): void => {
+  router.push("/")
 }
 </script>
 
 <template>
-  <DynamicForm :schema="formSchema" :btn-label="'S\'enregister'" @submit-form="(e) => handleRegister(e)">
-    <template #header>
-      <img src="@/assets/nw-logo.jpg" alt="">
-    </template>
-    <template #body>
-      <h3 class="mb-4">Démarrer avec NW Group!</h3>
-      <p class="text-muted text-sm mb-2">Veuillez créer un compte de connextion ci dessous :</p>
-    </template>
-    <template #footer>
-      <div class="text-sm text-muted">Vous avez un compte ? <a @click="loginRedirect()" style="cursor: pointer; color: rgb(3 111 186);" >Se connecter</a>.</div>
-    </template>
-  </DynamicForm>
+  <div class="register-view row">
+    <div class="register-form col d-flex justify-content-center align-items-center">
+      <DynamicForm :schema="formSchema" :btn-label="'S\'enregister'" @submit-form="(e) => handleRegister(e)">
+        <template #footer>
+          <div class="text-sm text-muted">Vous avez un compte ? <a @click="loginRedirect()" style="cursor: pointer; color: hsl(101deg 94% 36%);" >Se connecter</a>.</div>
+        </template>
+      </DynamicForm>
+    </div>
+  </div>
 </template>
+
+<style scoped>
+.register-view {
+  height: 100vh;
+}
+</style>
