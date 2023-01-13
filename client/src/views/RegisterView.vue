@@ -41,12 +41,10 @@ const handleRegister = (e: string): void => {
 
   authStore.register(user)
   .then(res => {
-    console.log(res)
     alert('Register successfully!');
-    authStore.loading = false
   }).catch(e => {
-    console.log(e)
     alert('ERROR Register!');
+  }).finally(() => {
     authStore.loading = false
   })
 }

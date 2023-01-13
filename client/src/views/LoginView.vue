@@ -34,12 +34,10 @@ const handleLogin = (e: string) => {
 
   authStore.login(user)
   .then(res => {
-    console.log(res)
     alert('Logged in successfully!');
-    authStore.loading = false
   }).catch(e => {
-    console.log(e)
     alert('ERROR Login!');
+  }).finally(() => {
     authStore.loading = false
   })
 }
