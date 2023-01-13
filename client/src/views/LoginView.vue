@@ -51,7 +51,7 @@ const registerRedirect = () => {
 </script>
 
 <template>
-  <div class="login-view flex-column-reverse flex-lg-row row">
+  <div class="login-view flex-lg-row row">
     <div class="login-form col d-flex justify-content-center align-items-center">
       <DynamicForm :schema="formSchema" :btn-label="'Se connecter'" @submit-form="(e) => handleLogin(e)">
         <template #footer>
@@ -60,7 +60,7 @@ const registerRedirect = () => {
       </DynamicForm>
     </div>
     <div class="register-redirect col d-flex justify-content-center align-items-center">
-      <div style="width: 50%">
+      <div style="width: 50%; margin-top: auto;">
         <h2>Créer un compte</h2>
         <a @click="registerRedirect()" class="submit-link">S'enregister</a>
         <div class="m-4 text-sm text-white">

@@ -19,8 +19,7 @@ class AuthService {
         const user:User = {
           email: payload.email,
           username: payload.username, 
-          token: response.data.access_token,
-          password: undefined
+          token: response.data.access_token
         }
 
         return user
@@ -28,7 +27,7 @@ class AuthService {
     //
   }
 
-  async register(username: string, email: string, password: string): Promise<User | undefined> {
+  async register(email: string, username: string, password: string): Promise<User | undefined> {
     const response = await axios
       .post(API_URL + 'register', {
         username,
@@ -44,8 +43,7 @@ class AuthService {
           const user:User = {
             email: payload.email,
             username: payload.username, 
-            token: response.data.access_token,
-            password: undefined
+            token: response.data.access_token
           }
   
           return user

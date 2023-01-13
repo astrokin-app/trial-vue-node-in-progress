@@ -3,7 +3,7 @@ import { User } from '@/models/UsersModel'
 import AuthService from '@/services/AuthService'
 
 export type RootState = {
-  user: User[],
+  user: User | undefined,
   loading: boolean
 }
 
@@ -11,40 +11,33 @@ export const useAuthStore = defineStore({
   id: "authStore",
   state: () => 
     ({
-      user: [],
+      user: undefined,
       loading: false
     } as RootState),
 
     actions: {
       async login(user: User): Promise<User | undefined> {
         this.loading = !this.loading
-        if (!user) return;
 
-        const loginResult = await AuthService.login(user.email, user.password!)
+        const currentUser = await AuthService.login(user.email, user.password!)
 
-        if (loginResult) {
-          // @ts-ignore
-          this.user = loginResult
-        } else {
-            this.user = []
+        if (currentUser && currentUser.email && currentUser.username && currentUser.token) {
+          this.user = {email: currentUser.email, username: currentUser.username, token: currentUser.token }
         }
 
-        return loginResult
+        return this.user
       },
 
       async register(user: User): Promise<User | undefined> {
         this.loading = !this.loading
-        if (!user) return;
 
-        const registerResult = await AuthService.register(user.username!, user.email, user.password!)
-        if (registerResult) {
-          // @ts-ignore
-          this.user = registerResult
-        } else {
-            this.user = []
+        const currentUser = await AuthService.register(user.email, user.username!, user.password!)
+
+        if (currentUser && currentUser.email && currentUser.username && currentUser.token) {
+          this.user = {email: currentUser.email, username: currentUser.username, token: currentUser.token }
         }
 
-        return registerResult
+        return this.user
       }
     }
 })
