@@ -60,7 +60,7 @@ const registerRedirect = () => {
       </DynamicForm>
     </div>
     <div class="register-redirect col d-flex justify-content-center align-items-center">
-      <div style="width: 50%; margin-top: auto;">
+      <div class="w-50 mt-2">
         <h2>Créer un compte</h2>
         <a @click="registerRedirect()" class="submit-link">S'enregister</a>
         <div class="m-4 text-sm text-white">
