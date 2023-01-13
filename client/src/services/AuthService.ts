@@ -1,40 +1,34 @@
+import { User } from '@/models/UsersModel';
 import axios from 'axios'
 import VueJwtDecode from "vue-jwt-decode";
 
 const API_URL = 'http://localhost:4000/'
 
 class AuthService {
-  async login(email: string, password: string) {
+  async login(email: string, password: string): Promise<User | undefined> {
     const response = await axios
       .post(API_URL + 'login', {
         email, password
       })
 
     if (response.data.access_token) {
-      try {
         const payload = VueJwtDecode.decode(response.data.access_token);
-
+        // Use cookie instead
         localStorage.setItem('user', JSON.stringify(payload))
 
-        return {
-          username: payload.username, 
+        const user:User = {
           email: payload.email,
-          token: response.data.access_token
+          username: payload.username, 
+          token: response.data.access_token,
+          password: undefined
         }
 
-      } catch (error) {
-        console.log(error)
-      }
+        return user
     }
-
     //
   }
 
-  logout() {
-    localStorage.removeItem('user')
-  }
-
-  async register(username: string, email: string, password: string) {
+  async register(username: string, email: string, password: string): Promise<User | undefined> {
     const response = await axios
       .post(API_URL + 'register', {
         username,
@@ -43,24 +37,25 @@ class AuthService {
       })
 
       if (response.data.access_token) {
-        try {
           const payload = VueJwtDecode.decode(response.data.access_token);
-
+          // Use cookie instead
           localStorage.setItem('user', JSON.stringify(payload))
-          
-          return {
-            username: payload.username, 
+
+          const user:User = {
             email: payload.email,
-            token: response.data.access_token
+            username: payload.username, 
+            token: response.data.access_token,
+            password: undefined
           }
   
-        } catch (error) {
-          console.log(error)
-        }
+          return user
       }
-
-      //
   }
+
+  logout() {
+    localStorage.removeItem('user')
+  }
+
 }
 
 export default new AuthService();
