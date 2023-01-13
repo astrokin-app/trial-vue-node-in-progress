@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { QueryResult } from 'pg'
 import { pool } from '../config/dbConfig'
-import jwt from 'jsonwebtoken'
+import { signAccessToken } from '../utils/jwt'
 require("dotenv").config()
 
 // TODO bcrypt password && model user
@@ -11,19 +11,17 @@ export const createUser = async (req: Request, res: Response): Promise<Response>
     const response: QueryResult = await pool.query('INSERT INTO users (username, email, password) VALUES ($1, $2, $3)', [username, email, password])
 
     if (!response.rowCount) {
-      return res.status(401).json({ message: 'Error. User Not Created.' })
+      return res.status(401).json({ message: "error_createUser" })
     }
 
-    const token = jwt.sign({
-      username: username,
-      email: email
-    }, process.env.JWT_SECRET!, { expiresIn: '3 hours' })
-
-    return res.status(200).json({ access_token: token })
+    return res.status(200).json({ access_token: signAccessToken(email, password) })
 
   } catch (e) {
     console.log(e)
-    throw new Error(`ERROR CREATE USER: ${e.toString()}`);
+    throw new Error(`error_createUser: ${e.toString()}`);
+
+  } finally {
+    return res.status(401).json({ message: "error_createUser" })
   }
 }
 
@@ -34,18 +32,16 @@ export const getUserByEmailPassword = async (req: Request, res: Response): Promi
     console.log('ENDPOINT LOGIN', response)
 
     if (!response.rows[0]) {
-      return res.status(401).json({ message: 'Error. User Not Found.' })
+      return res.status(401).json({ message: "error_getUserByEmailPassword" })
     }
 
-    const token = jwt.sign({
-      username: response.rows[0].username,
-      email: response.rows[0].email
-    }, process.env.JWT_SECRET!, { expiresIn: '3 hours' })
-
-    return res.status(200).json({ access_token: token })
+    return res.status(200).json({ access_token: signAccessToken(email, password) })
 
   } catch (e) {
     console.log(e)
-    throw new Error(`ERROR GET USER BY EMAIL PASSWORD: ${e.toString()}`);
+    throw new Error(`error_getUserByEmailPassword: ${e.toString()}`);
+
+  } finally {
+    return res.status(401).json({ message: "error_getUserByEmailPassword" })
   }
 }

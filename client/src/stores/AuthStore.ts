@@ -14,29 +14,32 @@ export const useAuthStore = defineStore({
     } as RootState),
 
     actions: {
-      async login(user: User) {
+      async login(user: User): Promise<User | undefined> {
         if (!user) return;
 
-        const loginResult = await AuthService.login(user.email, user.password)
+        const loginResult = await AuthService.login(user.email, user.password!)
+
         if (loginResult) {
           // @ts-ignore
           this.user = loginResult
         } else {
             this.user = []
         }
+
         return loginResult
       },
 
-      async register(user: User) {
+      async register(user: User): Promise<User | undefined> {
         if (!user) return;
 
-        const registerResult = await AuthService.register(user.username!, user.email, user.password)
+        const registerResult = await AuthService.register(user.username!, user.email, user.password!)
         if (registerResult) {
           // @ts-ignore
           this.user = registerResult
         } else {
             this.user = []
         }
+
         return registerResult
       }
     }
