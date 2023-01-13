@@ -17,3 +17,5 @@ enter your database credentials in .env: ~ cd /server
 ```
 ~ cd client/ npm install && npm run dev
 ```
+
+## Project is now available at http://localhost:{PORT} (default: 4000)
