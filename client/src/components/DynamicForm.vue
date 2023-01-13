@@ -1,17 +1,13 @@
 <script setup lang="ts">
 import DynamicCard from './DynamicCard.vue';
 import { Form, Field, ErrorMessage, defineRule, configure } from 'vee-validate';
-import { required, email, min, one_of } from '@vee-validate/rules';
+import { required, email, min } from '@vee-validate/rules';
 import { localize } from '@vee-validate/i18n';
-import { fail } from 'assert';
-
-let failPassword = false
 
 // Define the rule globally
 defineRule('required', required);
 defineRule('email', email);
 defineRule('min', min);
-defineRule('oneOf', one_of);
 
 
 // Generates a French message locale generator
@@ -21,7 +17,6 @@ configure({
       required: 'Ce champ est obligatoire',
       email: 'Ce champ doit comporter un format e-mail valide',
       min: 'Ce champ doit contenir au minimum 6 characteres',
-      oneOf: 'Les mots de passe doivent correspondre'
     },
   }),
 });
@@ -42,20 +37,8 @@ const emit = defineEmits<{
   (e: 'submitForm', value: string): void
 }>()
 
-const onSubmit = (values: any) => {
-  if (values.password === values.confirmPassword) {
-    failPassword = false
-    document.getElementById('errorPassword')?.remove()
-    emit('submitForm', JSON.stringify(values, null, 2))
-  } else if (failPassword === false) {
-    failPassword = true
-    const element = document.createElement("div")
-    element.innerHTML = "Les mots de passe doivent correspondre"
-    element.style.fontSize = "13px"
-    element.style.color = "red"
-    element.id = "errorPassword"
-    document.getElementById('confirmPassword')?.parentNode?.appendChild(element); 
-  }
+const onSubmit = (values: any): void => {
+  emit('submitForm', JSON.stringify(values, null, 2))
 }
 </script>
 
@@ -75,7 +58,7 @@ const onSubmit = (values: any) => {
           :key="name"
         >
           <label :for="name" class="form-label"></label>
-          <Field class="form-control" :vid="name" :placeholder="label" :as="as" :id="name" :name="name" :ref="ref" v-bind="attrs" :rules="name === 'email' ? 'required|email' : name === 'password' ? 'required|min:6' : name === 'confirmPassword' ? 'required|min:6' : 'required'"/>
+          <Field class="form-control" :placeholder="label" :as="as" :id="name" :name="name" v-bind="attrs" :rules="name === 'email' ? 'required|email' : name === 'password' ? 'required|min:6' : name === 'confirmPassword' ? 'required|min:6' : 'required'"/>
           <ErrorMessage class="error-message" as="div" :name=name v-slot="{ message }">
             <p>{{ message }}</p>
           </ErrorMessage>

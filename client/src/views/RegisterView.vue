@@ -25,13 +25,6 @@ const formSchema = {
       as: 'input',
       type: 'password',
       rules: Yup.string().min(6).required(),
-    },
-    {
-      label: 'Confirmer le mot de passe',
-      name: 'confirmPassword',
-      as: 'input',
-      type: 'password',
-      rules: Yup.string().min(6).required(),
     }
   ],
 };
