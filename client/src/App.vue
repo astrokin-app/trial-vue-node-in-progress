@@ -6,10 +6,10 @@
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .container-fluid {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: $full-height;
 }
 </style>

@@ -80,7 +80,7 @@ const authStore = useAuthStore()
   background: $primary-color;
   outline: none;
   border: none;
-  color: #fff;
+  color: $white-color;
   font-size: 18px;
   padding: 10px 15px;
   display: block;
@@ -91,8 +91,8 @@ const authStore = useAuthStore()
   cursor: pointer;
 }
 
-.submit-btn:hover, .submit-btn:focus, .submit-btn:active, .submit-btn.active, .open>.dropdown-toggle.submit-btn {
-    color: #fff;
+.submit-btn:hover, .submit-btn:focus, .submit-btn:active, .submit-btn.active {
+    color: $white-color;
     transition: opacity 0.5s;  
     opacity: 0.9;
 }

@@ -16,8 +16,8 @@
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .card-header {
-  background-color: white;
+  background-color: $white-color;
 }
 </style>

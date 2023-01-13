@@ -87,7 +87,7 @@ const registerRedirect = () => {
 }
 
 .submit-link {
-  background: white;
+  background: $white-color;
   outline: none;
   border: none;
   color: $primary-color;
