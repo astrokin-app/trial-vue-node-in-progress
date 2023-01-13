@@ -11,14 +11,17 @@ export const createUser = async (req: Request, res: Response): Promise<Response>
     const response: QueryResult = await pool.query('INSERT INTO users (username, email, password) VALUES ($1, $2, $3)', [username, email, password])
 
     if (!response.rowCount) {
-      return res.status(401).json({ message: 'Error. User Not Created.' })
+      return res.status(401).json({ message: "error_createUser" })
     }
 
     return res.status(200).json({ access_token: signAccessToken(email, password) })
 
   } catch (e) {
     console.log(e)
-    throw new Error(`createUser - ERROR: ${e.toString()}`);
+    throw new Error(`error_createUser: ${e.toString()}`);
+
+  } finally {
+    return res.status(401).json({ message: "error_createUser" })
   }
 }
 
@@ -29,13 +32,16 @@ export const getUserByEmailPassword = async (req: Request, res: Response): Promi
     console.log('ENDPOINT LOGIN', response)
 
     if (!response.rows[0]) {
-      return res.status(401).json({ message: 'Error. User Not Found.' })
+      return res.status(401).json({ message: "error_getUserByEmailPassword" })
     }
 
     return res.status(200).json({ access_token: signAccessToken(email, password) })
 
   } catch (e) {
     console.log(e)
-    throw new Error(`getUserByEmailPassword - ERROR: ${e.toString()}`);
+    throw new Error(`error_getUserByEmailPassword: ${e.toString()}`);
+
+  } finally {
+    return res.status(401).json({ message: "error_getUserByEmailPassword" })
   }
 }

@@ -34,7 +34,7 @@ export const useAuthStore = defineStore({
 
         const registerResult = await AuthService.register(user.username!, user.email, user.password!)
         if (registerResult) {
-          // @ts-ignores
+          // @ts-ignore
           this.user = registerResult
         } else {
             this.user = []
