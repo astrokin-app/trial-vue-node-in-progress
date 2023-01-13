@@ -3,6 +3,7 @@ import DynamicCard from './DynamicCard.vue';
 import { Form, Field, ErrorMessage, defineRule, configure } from 'vee-validate';
 import { required, email, min } from '@vee-validate/rules';
 import { localize } from '@vee-validate/i18n';
+import { useAuthStore } from '@/stores/AuthStore';
 
 // Define the rule globally
 defineRule('required', required);
@@ -40,6 +41,8 @@ const emit = defineEmits<{
 const onSubmit = (values: any): void => {
   emit('submitForm', JSON.stringify(values, null, 2))
 }
+
+const authStore = useAuthStore()
 </script>
 
 <template>
@@ -51,7 +54,7 @@ const onSubmit = (values: any): void => {
       </div>
     </template>
     <template #body>
-      <Form @submit="onSubmit" class="form-group" style="text-align: initial">
+      <Form @submit="onSubmit" class="form-group" style="text-align: initial" v-slot="{ isSubmitting }">
         <div
           class="form-outline"
           v-for="{ as, name, label, ref, ...attrs } in schema.fields"
@@ -63,7 +66,7 @@ const onSubmit = (values: any): void => {
             <p>{{ message }}</p>
           </ErrorMessage>
         </div>
-        <button class="submit-btn">{{ btnLabel }}</button>
+        <button class="submit-btn"><span v-show="authStore.loading" class="spinner-border spinner-border-sm mr-2"></span> {{ btnLabel }}</button>
       </Form>
     </template>
     <template #footer>

@@ -3,7 +3,8 @@ import { User } from '@/models/UsersModel'
 import AuthService from '@/services/AuthService'
 
 export type RootState = {
-  user: User[]
+  user: User[],
+  loading: bool
 }
 
 export const useAuthStore = defineStore({
@@ -11,10 +12,12 @@ export const useAuthStore = defineStore({
   state: () => 
     ({
       user: [],
+      loading: false
     } as RootState),
 
     actions: {
       async login(user: User): Promise<User | undefined> {
+        this.loading = !this.loading
         if (!user) return;
 
         const loginResult = await AuthService.login(user.email, user.password!)
@@ -30,6 +33,7 @@ export const useAuthStore = defineStore({
       },
 
       async register(user: User): Promise<User | undefined> {
+        this.loading = !this.loading
         if (!user) return;
 
         const registerResult = await AuthService.register(user.username!, user.email, user.password!)

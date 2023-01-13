@@ -43,9 +43,11 @@ const handleRegister = (e: string): void => {
   .then(res => {
     console.log(res)
     alert('Register successfully!');
+    authStore.loading = false
   }).catch(e => {
     console.log(e)
     alert('ERROR Register!');
+    authStore.loading = false
   })
 }
 
