@@ -50,7 +50,7 @@ const authStore = useAuthStore()
     <template #header>
       <div>
         <h1>NW Groupe</h1>
-        <h3>Réuissir la transition énergétique.</h3>
+        <h3>Réussir la transition énergétique.</h3>
       </div>
     </template>
     <template #body>
