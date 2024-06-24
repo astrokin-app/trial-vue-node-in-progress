@@ -1,6 +1,6 @@
 export type UserModel = {
   email: string;
   username: string;
-  password?: string;
+  password: string;
   token?: string
 };
