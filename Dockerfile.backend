@@ -1,0 +1,17 @@
+FROM node:20.8-alpine3.18 as base
+
+# Create and set the working directory
+WORKDIR /app/src/
+COPY ./server/src/package.json ./server/src/package-lock.json ./
+RUN npm install
+RUN npm install -g ts-node
+
+COPY ./server/src .
+
+EXPOSE 3009
+
+# this is the development image
+FROM base as dev
+ENV NODE_ENV development
+
+CMD ["npm", "run", "dev"]

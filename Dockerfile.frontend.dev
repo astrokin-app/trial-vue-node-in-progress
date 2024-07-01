@@ -1,0 +1,12 @@
+FROM node:20.8-alpine3.18 as base
+
+# Create and set the working directory
+WORKDIR /app
+COPY ./client/package.json ./client/package-lock.json ./
+RUN npm install
+
+COPY ./client .
+
+EXPOSE 82
+
+CMD ["npm", "run", "dev"]

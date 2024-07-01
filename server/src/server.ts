@@ -1,7 +1,7 @@
 import express from 'express'
-import { routes } from './routes';
+import { routes } from '../src/routes';
 import cors from 'cors';
-require("dotenv").config()
+require("dotenv").config({ path: '../../.env' })
 
 const app = express()
 
@@ -10,7 +10,7 @@ var corsOptions = {
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 
-const PORT = process.env.PORT || 4000
+const PORT = process.env.PORT || 3009
 
 //middlewares
 app.use(express.json())
