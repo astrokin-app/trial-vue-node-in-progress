@@ -12,24 +12,21 @@ services:
       - "3009:3009"
     env_file:
       - .env
-    networks:
-      - app_network
     volumes:
       - ./server/src:/app/src
 
   # Postgres service
   app_db:
     container_name: app_db
-    image: postgres:15.4-alpine3.18
+    image: postgres:15-alpine3.19
+    restart: always
     ports:
       - "54321:5432"
     env_file:
       - .env
     volumes:
+      - ./server/config:/docker-entrypoint-initdb.d
       - ./server/pg-data:/var/lib/postgresql/data
-      - ./server/config/database.sql:/docker-entrypoint-initdb.d/database.sql
-    networks:
-      - app_network
 
   # Nginx/Vue.js service
   app_fe:
@@ -38,14 +35,4 @@ services:
       context: .
       dockerfile: Dockerfile.frontend.dev
     ports:
-      - "82:82"
-    volumes:
-      - ./client:/app
-
-networks:
-  app_network:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.28.0.0/16
+      - "8081:8081"

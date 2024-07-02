@@ -2,7 +2,7 @@ import { User } from '@/models/UsersModel';
 import axios from 'axios'
 import VueJwtDecode from "vue-jwt-decode";
 
-const API_URL = 'http://localhost:4000/'
+const API_URL = 'http://localhost:3009/'
 
 class AuthService {
   async login(email: string, password: string): Promise<User | undefined> {
