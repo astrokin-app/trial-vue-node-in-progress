@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 
 const bEncrypt = (password: string) => {
   return new Promise((resolve, reject) => {

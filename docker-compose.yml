@@ -1,0 +1,38 @@
+services:
+  # NodeJS/Express service
+  app_be:
+    container_name: app_backend
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+      target: dev
+    depends_on:
+      - app_db
+    ports:
+      - "3009:3009"
+    env_file:
+      - .env
+    volumes:
+      - ./server/src:/app/src
+
+  # Postgres service
+  app_db:
+    container_name: app_db
+    image: postgres:15-alpine3.19
+    restart: always
+    ports:
+      - "54321:5432"
+    env_file:
+      - .env
+    volumes:
+      - ./server/config:/docker-entrypoint-initdb.d
+      - ./server/pg-data:/var/lib/postgresql/data
+
+  # Nginx/Vue.js service
+  app_fe:
+    container_name: app_frontend_dev
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend.dev
+    ports:
+      - "8081:8081"
